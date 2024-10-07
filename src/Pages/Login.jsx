@@ -80,7 +80,11 @@ const Login = () => {
             <p style={{ marginBottom: 0 }}>Not Registered?</p>
             <Link
               to={'/register'}
-              style={{ textDecoration: 'none', color: '#271776ca' }}
+              style={{
+                textDecoration: 'none',
+                color: '#271776ca',
+                fontWeight: 'bolder',
+              }}
             >
               Register Now
             </Link>
