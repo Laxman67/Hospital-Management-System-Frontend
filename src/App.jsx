@@ -9,8 +9,9 @@ import { ToastContainer } from 'react-toastify';
 import Navbar from './components/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { useContext, useEffect } from 'react';
-import { Context } from './main';
 import axios from 'axios';
+import { Context } from './main';
+
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
 

@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react';
-import { Context } from '../main';
-import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Context } from '../main';
 
 const Login = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
@@ -15,40 +15,32 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (isAuthenticated) {
-      return navigateTo('/');
-    }
-
     try {
-      let formData = new FormData();
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('confirmPassword', confirmPassword);
-      formData.append('role', 'Patient');
-
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/user/login`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      toast.success(response.data.message);
-      // Reset Fields
-      setConfirmPassword('');
-      setPassword('');
-      setEmail('');
-      setIsAuthenticated(true);
-      navigateTo('/');
+      await axios
+        .post(
+          `${import.meta.env.VITE_BACKEND_URL}/user/login`,
+          { email, password, confirmPassword, role: 'Patient' },
+          {
+            withCredentials: true,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        )
+        .then((res) => {
+          toast.success(res.data.message);
+          setIsAuthenticated(true);
+          navigateTo('/');
+          setEmail('');
+          setPassword('');
+          setConfirmPassword('');
+        });
     } catch (error) {
       toast.error(error.response.data.message);
     }
   };
+
+  if (isAuthenticated) {
+    return <Navigate to={'/'} />;
+  }
 
   return (
     <>
