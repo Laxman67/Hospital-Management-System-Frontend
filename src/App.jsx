@@ -20,7 +20,7 @@ const App = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/patient/me`,
+          `https://hospital-management-system-backend-g3q3.onrender.com/user/patient/me`,
           {
             withCredentials: true,
           }
